@@ -4,6 +4,7 @@ var formidable = require('formidable');
 exports.upload = function(request, response) {
     console.log("Rozpoczynam obsługę żądania upload.");
     var form = new formidable.IncomingForm();
+    form.uploadDir = "./uploader/";  //dodałem to i poszło :)
     form.parse(request, function(error, fields, files) {
         fs.renameSync(files.upload.path, "test.png");
         response.writeHead(200, {"Content-Type": "text/html"});
