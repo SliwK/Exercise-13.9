@@ -28,7 +28,7 @@ exports.upload = function(request, response) {
 };
 
 exports.show = function(request, response) {
-    fs.readFile(this.fileTitle, "binary", function(error, file) {
+    fs.readFile(this.fileTitle, "binary", function(error, file) { //tutaj zamiast "text.png" chcę podać nową nazwę która mi się generuje ale wyrzuca błędem...
         response.writeHead(200, {"Content-Type": "image/png"});
         response.write(file, "binary");
         response.end();
