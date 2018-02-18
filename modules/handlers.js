@@ -16,24 +16,24 @@ exports.upload = function(request, response) {
             fileTitle = title + ".png";
           }
 
-        console.log(fields.title);
-        console.log(fileTitle);
-
         fs.renameSync(files.upload.path, fileTitle);
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write("received image:<br/>");
         response.write("<img src='/show' />");
+
+        exports.show = function(request, response) {
+            fs.readFile(fileTitle, "binary", function(error, file) {
+                response.writeHead(200, {"Content-Type": "image/png"});
+                response.write(file, "binary");
+                response.end();
+            });
+        };
+
         response.end();
     });
 };
 
-exports.show = function(request, response) {
-    fs.readFile(this.fileTitle, "binary", function(error, file) { //tutaj zamiast "text.png" chcę podać nową nazwę która mi się generuje ale wyrzuca błędem...
-        response.writeHead(200, {"Content-Type": "image/png"});
-        response.write(file, "binary");
-        response.end();
-    });
-};
+
 
 exports.welcome = function(request, response) {
     console.log("Rozpoczynam obsługę żądania welcome.");
